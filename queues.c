@@ -43,6 +43,7 @@ int main(void) {
     printList(queue, size);
 
     free(queue);
+    queue = NULL;
 
     return EXIT_SUCCESS;
 }
