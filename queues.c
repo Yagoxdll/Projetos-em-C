@@ -8,7 +8,7 @@ void allocate(int **queue, int *size) {
     *queue = (int*)realloc(*queue, (*size) * sizeof(int));
 
     if (*queue == NULL) {
-        fprintf(stderr, "Memory allocation error\n");
+        printf("Memory allocation error\n");
         exit(EXIT_FAILURE);
     }
 }
@@ -32,7 +32,7 @@ int main(void) {
     queue = (int*)malloc(size * sizeof(int));
 
     if (queue == NULL) {
-        fprintf(stderr, "Memory allocation error\n");
+        printf("Memory allocation error\n");
         return EXIT_FAILURE;
     }
 
