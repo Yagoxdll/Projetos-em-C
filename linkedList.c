@@ -21,10 +21,11 @@ struct linkeListStruct *createNewNode(int newValue){
 void insertAtBegginig(struct linkeListStruct **head, int newValue){
 
     struct linkeListStruct *newNode = createNewNode(newValue);
-    
-    newNode->value = newValue;
-    newNode->next = *head;
-
+    if(newnode == NULL){
+        newNode->next = *NULL;
+    }else{
+        newnode->next = *head;
+    }
     *head = newNode;
 }
 
