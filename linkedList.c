@@ -1,53 +1,55 @@
-//pratical use of liked list created to store int values
-
 #include <stdio.h>
 #include <stdlib.h>
 
-struct linkeListStruct{
+struct linkedListStruct {
     int value;
-    struct linkeListStruct *next;
+    struct linkedListStruct *next;
 };
 
-struct linkeListStruct *createNewNode(int newValue){
-
-    struct linkeListStruct *newNode = (struct linkeListStruct*)malloc(sizeof(struct linkeListStruct));
-
+struct linkedListStruct *createNewNode(int newValue) {
+    struct linkedListStruct *newNode = (struct linkedListStruct *)malloc(sizeof(struct linkedListStruct));
     newNode->value = newValue;
     newNode->next = NULL;
-
     return newNode;
 }
 
-void insertAtBegginig(struct linkeListStruct **head, int newValue){
-
-    struct linkeListStruct *newNode = createNewNode(newValue);
-    if(newnode == NULL){
-        newNode->next = *NULL;
-    }else{
-        newnode->next = *head;
+void insertAtEnd(struct linkedListStruct **head, int newValue) {
+    struct linkedListStruct *newNode = createNewNode(newValue);
+    if (*head == NULL) {
+        *head = newNode;
+        return;
     }
-    *head = newNode;
+    struct linkedListStruct *current = *head;
+    while (current->next != NULL) {
+        current = current->next;
+    }
+    current->next = newNode;
 }
 
-void printLikendList(struct linkeListStruct *head){
-    while(head != NULL){
-        printf("%d -->  ", head->value);
+void printLinkedList(struct linkedListStruct *head) {
+    while (head != NULL) {
+        printf("%d --> ", head->value);
         head = head->next;
-    }printf("NULL\n");
+    }
+    printf("NULL\n");
 }
 
-int main(void){
+void freeLinkedList(struct linkedListStruct *head) {
+    struct linkedListStruct *temp;
+    while (head != NULL) {
+        temp = head;
+        head = head->next;
+        free(temp);
+    }
+}
 
-    struct linkeListStruct *linkedList = NULL;
-
-    insertAtBegginig(&linkedList, 100);
-    insertAtBegginig(&linkedList, 200);
-    insertAtBegginig(&linkedList, 300);
-
-    printLikendList(linkedList);
-
-    free(linkedList);
+int main(void) {
+    struct linkedListStruct *linkedList = NULL;
+    insertAtEnd(&linkedList, 100);
+    insertAtEnd(&linkedList, 200);
+    insertAtEnd(&linkedList, 300);
+    printLinkedList(linkedList);
+    freeLinkedList(linkedList);
     linkedList = NULL;
-
     return 0;
 }
