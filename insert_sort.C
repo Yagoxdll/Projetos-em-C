@@ -34,9 +34,12 @@ void print_array(int array[], int size) {
     printf("NULL\n\n");
 }
 
-// Function to print a line separator
-void print_line() {
-    printf("------------------------------------------------------------\n");
+// Function to print a line separator with a specified length
+void print_line(int length) {
+    for (int i = 0; i < length; i++) {
+        printf("-");
+    }
+    printf("\n");
 }
 
 int main(void) {
