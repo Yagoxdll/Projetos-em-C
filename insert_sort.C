@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define LINE 50
+
 // Function to perform insertion sort
 void insert_sort(int array[], int size) {
     int temp;
@@ -42,6 +44,7 @@ void print_line(int length) {
     printf("\n");
 }
 
+
 int main(void) {
     int size;
 
@@ -53,13 +56,13 @@ int main(void) {
     int array[size];
 
     // Print a line separator
-    print_line();
+    print_line(LINE);
     printf("Enter values for the array:\n");
     // Prompt the user to input values for the array
     array_creator(array, size);
 
     // Print a line separator
-    print_line();
+    print_line(LINE);
     printf("Array before sorting:\n");
     // Print the array before sorting
     print_array(array, size);
@@ -71,7 +74,7 @@ int main(void) {
     print_array(array, size);
 
     // Print a line separator
-    print_line();
+    print_line(LINE);
 
     system("pause");
 
