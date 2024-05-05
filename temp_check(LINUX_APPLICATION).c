@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 
 // Function to get the current CPU temperature
 void get_thermal(){
