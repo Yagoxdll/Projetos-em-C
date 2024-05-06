@@ -3,15 +3,18 @@
 #include <string.h>
 
 #define LINE_MAX_SIZE 70
+#define MAX_FILE_NAME_SIZE 50
 #define LOCAL_FILES "REG/"
 
+///MINOR FUNCTIONS OF THE APPLICATION
+
 // Function to draw a line of characters
-void draw_line_global(int size){
+void draw_line_global(int size) {
     int i = 0;
-    do{
+    do {
         printf("=");
         i++;
-    }while(i <= size);
+    } while(i <= size);
     printf("\n");
 }
 
@@ -35,15 +38,26 @@ void msg(char txt[]) {
 }
 
 // Function to display the list of files in the "REG" directory
-void display_files(){
+void display_files() {
     minor_line(LINE_MAX_SIZE);
     system("dir /A:-D /B .\\REG | findstr /V \"<DIR>\"");
     minor_line(LINE_MAX_SIZE);
 }
 
+// Function to display text from a file
+void display_text(FILE *arq) {
+    char r;
+    while ((r = getc(arq)) != EOF) {
+        printf("%c", r);
+    }
+    printf("\n");
+}
+
+///GREATER FUNCTIONS OF THE APPLICATION
+
 // Function to edit a text file
 void txt_editor(FILE *arq) {
-    char name[50], w[999], dest[] = LOCAL_FILES;
+    char name[MAX_FILE_NAME_SIZE], w[999], dest[] = LOCAL_FILES;
 
     // Clear the screen and display minor lines and file list
     system("cls");
@@ -55,6 +69,9 @@ void txt_editor(FILE *arq) {
     name[strcspn(name, "\n")] = '\0';
     strcat(dest, name);
 
+    arq = fopen(dest, "r");
+    display_text(arq);
+
     // Open the file in append mode
     arq = fopen(dest , "a+");
     if(arq == NULL) {
@@ -63,10 +80,6 @@ void txt_editor(FILE *arq) {
     }
 
     // Prompt for text input and write to the file
-    system("cls");
-    minor_line(LINE_MAX_SIZE);
-    printf("    Enter some text\n");
-    minor_line(LINE_MAX_SIZE);
     fgets(w, sizeof(w), stdin);
     fputs(w, arq);
     fputs("\n", arq);   
@@ -75,7 +88,7 @@ void txt_editor(FILE *arq) {
 
 // Function to read and display a text file
 void txt_reader(FILE *arq) {
-    char name[50], path[150] = LOCAL_FILES;
+    char name[MAX_FILE_NAME_SIZE], path[] = LOCAL_FILES;
 
     system("cls");
     display_files();
@@ -90,21 +103,15 @@ void txt_reader(FILE *arq) {
 
     // Open the file in read mode
     arq = fopen(path, "r");
-    if (arq == NULL) {
-        printf("Error opening the file.\n");
+    if(arq == NULL) {
+        printf("TXT_READER_ERROR: Could not open file.\n");
         return;
     }
 
     // Clear the screen and display the file content
     system("cls");
     draw_line_global(LINE_MAX_SIZE);
-
-    char r;
-    while ((r = getc(arq)) != EOF) {
-        printf("%c", r);
-    }
-    printf("\n");
-
+    display_text(arq);
     fclose(arq);
     draw_line_global(LINE_MAX_SIZE);
 
@@ -112,16 +119,39 @@ void txt_reader(FILE *arq) {
     getchar();
 }
 
+// Function to clean a text file
+void txt_clean_file(FILE *arq) {
+    system("cls");
+
+    char name[MAX_FILE_NAME_SIZE], dest[] = LOCAL_FILES;
+    display_files();
+
+    printf("Which file do you want to clean: ");
+    fgets(name, sizeof(name), stdin);
+    name[strcspn(name, "\n")] = '\0';
+
+    strcat(dest, name);
+
+    arq = fopen(dest, "w");
+
+    if(arq == NULL) {
+        printf("TXT_CLEAN_FILE_ERROR: Could not open file.\n");
+        return;
+    }
+
+    fclose(arq);
+}
+
 // Function to delete a file
 void delete_file() {
-    char name[50], command[100] = "del .\\REG\\";
+    char name[MAX_FILE_NAME_SIZE], command[100] = "del .\\REG\\";
 
     system("cls");
     display_files();
     printf("Which file do you want to delete\n[0 - to cancel]\n\n-> ");
-    
+
     fgets(name, sizeof(name), stdin);
-    name[strcspn(name, "\n")] = '\0'; // Remove o caractere de nova linha
+    name[strcspn(name, "\n")] = '\0'; // Remove the newline character
 
     if (strcmp(name, "0") == 0) {
         printf("Deletion cancelled.\n");
@@ -133,19 +163,19 @@ void delete_file() {
 }
 
 // Function to display the main menu and handle user input
-void standard_menu_idle() {
+void standard_menu_idle(FILE *arq) {
     int chose = -1, c;
-    FILE *arq;
 
     // Loop until the user chooses the exit option (0)
     while (chose != 0) {
         // Clear the screen and display the main menu
         system("cls");
         msg("TXT WRITER");
-        printf("\033[0;33m      CHOOSE AN OPTION;\n\n");
+        printf("\033[0;33m      CHOOSE AN OPTION\n\n");
         printf("\033[0;34m[ 1 ] Edit a file\n");
         printf("[ 2 ] Read a file\n");
-        printf("[ 3 ] Delete a file\n");
+        printf("[ 3 ] Clean a file\n");
+        printf("[ 4 ] Delete a file\n");
         printf("\033[0;31m[ 0 ] EXIT\033[0m\n");
         printf("\n---> ");
         scanf("%d", &chose);
@@ -162,6 +192,9 @@ void standard_menu_idle() {
                 txt_reader(arq);
                 break; // Go back to the beginning of the loop
             case 3:
+                txt_clean_file(arq);
+                break; // Go back to the beginning of the loop
+            case 4:
                 delete_file();
                 break; // Go back to the beginning of the loop
             case 0:
@@ -178,8 +211,14 @@ void standard_menu_idle() {
 int main(void) {
     // Create directory "REG" if it doesn't exist
     system("mkdir REG");
+    FILE *arq = NULL; // Initialize file pointer to NULL
     
-    standard_menu_idle();
+    // Call function to display the main menu
+    standard_menu_idle(arq);
+
+    // Set file pointer back to NULL as a security measure
+    arq = NULL;
 
     return 0;
 }
+
