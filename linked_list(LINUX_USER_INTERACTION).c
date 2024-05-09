@@ -1,3 +1,18 @@
+
+//////////////////
+//THIS SOFTRWARE//
+/////////////////
+
+//The provided C code is a simple program for managing a linked list. 
+//It includes functionalities to insert new elements into the list, view the list, 
+//and delete or reset the list. The program utilizes a menu-based interface where 
+//users can choose the operation they want to perform on the linked list. 
+//Each function, such as inserting elements or printing the list, is implemented with 
+//appropriate error handling and user-friendly messages. The code is well-structured, 
+//with clear function definitions and comments to explain the logic behind each operation. 
+//Overall, it serves as a basic example of how to implement a linked list management system in C.
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
