@@ -1,3 +1,21 @@
+
+/////////////////
+//THIS SOFTWARE//
+/////////////////
+
+
+// This C code is a straightforward text editor program. 
+// It allows users to edit, read, and delete text files within a directory named "REG". 
+// The program presents a main menu with options to edit, read, or delete text files. 
+// Depending on the user's choice, the program executes the corresponding action, 
+//such as opening a file for editing, displaying the content of a file, or deleting a file. 
+//Additionally, the program includes basic functionalities like drawing lines on the screen and displaying messages. 
+//It utilizes system commands to perform file operations such as creating directories, listing files, and deleting files. 
+//Overall, it's a simple yet useful program for basic text file manipulation.
+//
+//
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -221,4 +239,3 @@ int main(void) {
 
     return 0;
 }
-
