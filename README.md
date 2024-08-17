@@ -1,7 +1,7 @@
 C Programming Projects
 Overview
 
-This repository showcases a collection of C programming projects completed by [Student Name], an aspiring programmer. These projects demonstrate a range of skills and concepts mastered during their journey in learning C programming.
+This repository showcases a collection of C programming projects completed by me, an aspiring programmer. These projects demonstrate a range of skills and concepts mastered during their journey in learning C programming.
 Project List
 1. Dynamic Queue Implementation
 
